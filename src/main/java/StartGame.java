@@ -8,10 +8,10 @@ public class StartGame {
     private int maxUserError;
     private int minWordLength;
     private int maxWordLength;
-    private StageOfGame stog;
+    private StageOfGame view_stageofhangman;
 
     StartGame(Level level){
-        stog = new StageOfGame();
+        view_stageofhangman = new StageOfGame();
         if (level == Level.EASY)
         {
             maxUserError = 8;
@@ -45,11 +45,11 @@ public class StartGame {
         boolean include;
         while(countUserError <= maxUserError && String.valueOf(playerWord).contains("-"))  //основной игровой цикл
         {
-            Print_Image(playerWord, countUserError, wrongUserLetters);
+            PrintImage(playerWord, countUserError, wrongUserLetters);
             include = false;
 
             letter = String.valueOf(Main.sc.next()).toLowerCase();
-            Check_for_Exit(letter);
+            CheckforExit(letter);
             letter = String.valueOf(letter.charAt(0));
 
             if(letter.charAt(0) >= 'а' && letter.charAt(0) <= 'я' && !wrongUserLetters.contains(letter) && !String.valueOf(playerWord).contains(letter))
@@ -89,19 +89,25 @@ public class StartGame {
 
     }
 
-    public void Print_Image(char[] plwrld, int cntUE, String wrUL){
+    public void PrintImage(char[] playerWord, int countUserError, String wrongUserLetters){
         System.out.println("");
-        System.out.println(plwrld);
-        System.out.println("Количество ошибок: " + cntUE);
-        if(cntUE == maxUserError){System.out.println("В случае ещё одной ошибки вы проиграете !");}
+        System.out.println(playerWord);
+        System.out.println("Количество ошибок: " + countUserError);
+        if(countUserError == maxUserError){System.out.println("В случае ещё одной ошибки вы проиграете !");}
         System.out.printf("Ошибочные буквы: ");
-        for(char c : wrUL.toCharArray()) {System.out.printf(c + " ");}
+        for(char c : wrongUserLetters.toCharArray()) {
+            System.out.printf(c + " ");
+        }
         System.out.println("");
-        if(cntUE != 0) {System.out.println(stog.hangman[cntUE-1]);}
+        if(countUserError != 0) {
+            System.out.println(view_stageofhangman.hangman[countUserError-1]);
+        }
     }
 
-    public void Check_for_Exit(String lttr) {
-        if(lttr.equals("exit")){System.exit(0);};
+    public void CheckforExit(String letter) {
+        if(letter.equals("exit")){
+            System.exit(0);
+        }
     }
 }
 
