@@ -1,13 +1,13 @@
 import java.util.Arrays;
 
-public class StartGame {
+public class EngineOfGame {
 
     private int maxUserError;
     private int minWordLength;
     private int maxWordLength;
     private StageOfGame viewStageOfHangman;
 
-    StartGame(Level level){
+    EngineOfGame(Level level){
         viewStageOfHangman = new StageOfGame();
         if (level == Level.EASY)
         {
@@ -31,7 +31,7 @@ public class StartGame {
         }
     }
 
-    public void gameloop() throws Exception {
+    public void gameLoop() throws Exception {
         int countUserError = 0;
         String wrongUserLetters = "";
         String secretWord = new LoaderOfWords().getWord(minWordLength, maxWordLength);
