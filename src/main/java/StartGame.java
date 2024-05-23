@@ -1,6 +1,3 @@
-import java.io.*;
-import java.util.List;
-import java.util.Random;
 import java.util.Arrays;
 
 public class StartGame {
