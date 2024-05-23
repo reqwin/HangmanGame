@@ -11,7 +11,7 @@ public class Menu {
             {
                 case ("GO"):
                     System.out.println("Игра началась. Выберите сложность : \n" + "1 - EASY \n" + "2 - MEDIUM \n" + "3 - HARD \n" + "EXIT - ВЫХОД ИЗ ИГРЫ");
-                    return (change_level());
+                    return (changeLevel());
                 case ("EXIT"):
                     System.exit(0);
                 case ("HELP"):
@@ -25,7 +25,7 @@ public class Menu {
         }
     }
 
-    private Level change_level()
+    private Level changeLevel()
     {
         while(true) {
             switch (Main.sc.nextLine().toUpperCase()) {

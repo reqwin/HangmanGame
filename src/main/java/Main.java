@@ -13,6 +13,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Menu menu = new Menu();
         Level level = menu.start();
-        new StartGame(level).gameloop();
+        new EngineOfGame(level).gameLoop();
     }
 }
