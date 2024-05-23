@@ -68,7 +68,7 @@ public class EngineOfGame {
                     countUserError++;
                 }
             }else {
-                if(letter.charAt(0) <= 'а' && letter.charAt(0) >= 'я') {
+                if(!(letter.charAt(0) >= 'а' && letter.charAt(0) <= 'я')) {
                     System.out.println("Введите букву от \"А\" до \"Я\" !");
                 } else if(wrongUserLetters.contains(letter) || String.valueOf(playerWord).contains(letter))
                 {
@@ -89,14 +89,16 @@ public class EngineOfGame {
     }
 
     public void printImage(char[] playerWord, int countUserError, String wrongUserLetters){
-        System.out.println("\n" + playerWord + "\n" + "Количество ошибок: " + countUserError);
+        System.out.println("");
+        System.out.println(playerWord);
+        System.out.println("Количество ошибок: " + countUserError);
         if(countUserError == maxUserError){System.out.println("В случае ещё одной ошибки вы проиграете !");}
         System.out.printf("Ошибочные буквы: ");
         for(char c : wrongUserLetters.toCharArray()) {
             System.out.printf(c + " ");
         }
         System.out.println("");
-        if(countUserError != 0) {
+        if(countUserError > 0) {
             System.out.println(viewStageOfHangman.hangman[countUserError-1]);
         }
     }
