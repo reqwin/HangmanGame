@@ -8,10 +8,10 @@ public class StartGame {
     private int maxUserError;
     private int minWordLength;
     private int maxWordLength;
-    private StageOfGame view_stageofhangman;
+    private StageOfGame viewStageOfHangman;
 
     StartGame(Level level){
-        view_stageofhangman = new StageOfGame();
+        viewStageOfHangman = new StageOfGame();
         if (level == Level.EASY)
         {
             maxUserError = 8;
@@ -37,7 +37,7 @@ public class StartGame {
     public void gameloop() throws Exception {
         int countUserError = 0;
         String wrongUserLetters = "";
-        String secretWord = new Load_Word().getWord(minWordLength, maxWordLength);
+        String secretWord = new LoaderOfWords().getWord(minWordLength, maxWordLength);
         char[] playerWord = new char[secretWord.length()];
         String symbolMaskedLetter = "-";
         Arrays.fill(playerWord, symbolMaskedLetter.charAt(0));
@@ -45,11 +45,13 @@ public class StartGame {
         boolean include;
         while(countUserError <= maxUserError && String.valueOf(playerWord).contains("-"))  //основной игровой цикл
         {
-            PrintImage(playerWord, countUserError, wrongUserLetters);
+            printImage(playerWord, countUserError, wrongUserLetters);
             include = false;
 
             letter = String.valueOf(Main.sc.next()).toLowerCase();
-            CheckforExit(letter);
+            if(letter.equals("exit")){
+                System.exit(0);
+            }
             letter = String.valueOf(letter.charAt(0));
 
             if(letter.charAt(0) >= 'а' && letter.charAt(0) <= 'я' && !wrongUserLetters.contains(letter) && !String.valueOf(playerWord).contains(letter))
@@ -69,7 +71,7 @@ public class StartGame {
                     countUserError++;
                 }
             }else {
-                if(!(letter.charAt(0) >= 'а' && letter.charAt(0) <= 'я')) {
+                if(letter.charAt(0) <= 'а' && letter.charAt(0) >= 'я') {
                     System.out.println("Введите букву от \"А\" до \"Я\" !");
                 } else if(wrongUserLetters.contains(letter) || String.valueOf(playerWord).contains(letter))
                 {
@@ -89,10 +91,8 @@ public class StartGame {
 
     }
 
-    public void PrintImage(char[] playerWord, int countUserError, String wrongUserLetters){
-        System.out.println("");
-        System.out.println(playerWord);
-        System.out.println("Количество ошибок: " + countUserError);
+    public void printImage(char[] playerWord, int countUserError, String wrongUserLetters){
+        System.out.println("\n" + playerWord + "\n" + "Количество ошибок: " + countUserError);
         if(countUserError == maxUserError){System.out.println("В случае ещё одной ошибки вы проиграете !");}
         System.out.printf("Ошибочные буквы: ");
         for(char c : wrongUserLetters.toCharArray()) {
@@ -100,32 +100,10 @@ public class StartGame {
         }
         System.out.println("");
         if(countUserError != 0) {
-            System.out.println(view_stageofhangman.hangman[countUserError-1]);
+            System.out.println(viewStageOfHangman.hangman[countUserError-1]);
         }
     }
 
-    public void CheckforExit(String letter) {
-        if(letter.equals("exit")){
-            System.exit(0);
-        }
-    }
 }
 
-class Load_Word {
-    private List<String> ListWord;
-    private final String filename = "\\russian_nouns.txt";
-    private void Download_to_ListWord() throws Exception {
-        ListWord = new BufferedReader(new FileReader(new File(filename))).lines().toList();
-    }
 
-    public String getWord(int min, int max) throws Exception {
-        this.Download_to_ListWord();
-        String word;
-        while(true){
-            word = ListWord.get(new Random().nextInt(ListWord.size())).toLowerCase();
-            if(word.length() >= min && word.length() <= max && !(word.contains("-")))
-                break;
-        }
-        return word;
-    }
-}
